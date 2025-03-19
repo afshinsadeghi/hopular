@@ -1,8 +1,11 @@
 
 ### Update 03.2025:
-This is updated version to make the library work with the current version of numpy. It is tested with Numpy v1.22.4
+This is updated version to make the library work with the current version of numpy and pytorch-lightening. It is tested with Numpy v1.22.4 and PyTorch lightening 2.5.0 and python 3.12.3
 
-run as:   python -m hopular.interactive optim --dataset="sulfur"
+#### run as:  
+python -m hopular.interactive optim --dataset="sulfur" --num_workers=11 
+num workers are for dataloading 
+num gpus to use, if avaiable is set to 1 and it is automatically done.
 
 or to get list of datasets
 python -m hopular.interactive list --datasets
