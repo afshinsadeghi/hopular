@@ -1,0 +1,73 @@
+asynchronous_weights: false
+batch_size: -1
+betas:
+- 0.9
+- 0.999
+cold_restart: false
+feature_discrete: []
+feature_mean: !!python/object/apply:torch._utils._rebuild_tensor_v2
+- !!python/object/apply:torch.storage._load_from_bytes
+  - !!binary |
+    gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+    AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+    aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+    Z2UKcQFYCgAAADQzMDk5NTg2ODhxAlgDAAAAY3B1cQNLBk50cQRRLoACXXEAWAoAAAA0MzA5OTU4
+    Njg4cQFhLgYAAAAAAAAAF5IPP0J+Dz9mRuQ+sqkXP5V7GT9HwKQ9
+- 0
+- !!python/tuple
+  - 6
+- !!python/tuple
+  - 1
+- false
+- !!python/object/apply:collections.OrderedDict
+  - []
+feature_size: 32
+feature_stdv: !!python/object/apply:torch._utils._rebuild_tensor_v2
+- !!python/object/apply:torch.storage._load_from_bytes
+  - !!binary |
+    gAKKCmz8nEb5IGqoUBkugAJN6QMugAJ9cQAoWBAAAABwcm90b2NvbF92ZXJzaW9ucQFN6QNYDQAA
+    AGxpdHRsZV9lbmRpYW5xAohYCgAAAHR5cGVfc2l6ZXNxA31xBChYBQAAAHNob3J0cQVLAlgDAAAA
+    aW50cQZLBFgEAAAAbG9uZ3EHSwR1dS6AAihYBwAAAHN0b3JhZ2VxAGN0b3JjaApGbG9hdFN0b3Jh
+    Z2UKcQFYCgAAADQ5NjI0MDA1NzZxAlgDAAAAY3B1cQNLBk50cQRRLoACXXEAWAoAAAA0OTYyNDAw
+    NTc2cQFhLgYAAAAAAAAAYSdTPiT+aD4EbRw+61N4PqUSUT6tfFM9
+- 0
+- !!python/tuple
+  - 6
+- !!python/tuple
+  - 1
+- false
+- !!python/object/apply:collections.OrderedDict
+  - []
+final_feature_loss_weight: 0.0
+gamma: 1.0
+hidden_size: 0
+hidden_size_factor: 1.0
+initial_feature_loss_weight: 1.0
+input_dropout: 0.1
+input_sizes:
+- 1
+- 1
+- 1
+- 1
+- 1
+- 1
+learning_rate: 0.001
+lookup_dropout: 0.1
+lookup_ratio: 0.005
+lookup_steps: 1
+mask_probability: 0.025
+memory_ratio: 1.0
+noise_probability: 1.0
+num_blocks: 8
+num_heads: 8
+num_steps_per_cycle: 10000
+num_workers: 1
+output_dropout: 0.01
+replace_probability: 0.175
+scaling_factor: 1.0
+super_sample_factor: 1
+target_discrete: []
+target_numeric:
+- 5
+warmup_ratio: 0.0
+weight_decay: 0.1

@@ -222,7 +222,8 @@ def console_entry() -> None:
                 check_val_every_n_epoch=args.validation_delay,
                 gradient_clip_val=args.gradient_threshold,
                 gradient_clip_algorithm=r'norm',
-                gpus=1 if torch.cuda.is_available() else 0,
+                accelerator="cuda" if torch.cuda.is_available() else "cpu",
+                devices= [1] if torch.cuda.is_available() else "auto",
                 callbacks=[hopular_callback],
                 deterministic=not args.fast_mode,
                 accumulate_grad_batches=num_mini_batches

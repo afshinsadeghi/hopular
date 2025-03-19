@@ -328,7 +328,7 @@ class DataModule(LightningDataModule):
         return DataLoader(
             dataset=self.__data_train,
             batch_size=len(self.__data_train) if self.__batch_size is None else self.__batch_size,
-            pin_memory=self.trainer.gpus is not None,
+            pin_memory= 1 if torch.cuda.is_available() else None,  #pin_memory=self.trainer.gpus is not None,
             num_workers=self.__num_workers,
             persistent_workers=self.__num_workers > 0,
             collate_fn=partial(
@@ -355,7 +355,7 @@ class DataModule(LightningDataModule):
         return DataLoader(
             dataset=self.__data_validation,
             batch_size=len(self.__data_validation),
-            pin_memory=self.trainer.gpus is not None,
+            pin_memory= 1 if torch.cuda.is_available() else None, #is not None
             num_workers=self.__num_workers,
             persistent_workers=self.__num_workers > 0,
             collate_fn=partial(
@@ -382,7 +382,7 @@ class DataModule(LightningDataModule):
         return DataLoader(
             dataset=self.__data_test,
             batch_size=len(self.__data_test),
-            pin_memory=self.trainer.gpus is not None,
+            pin_memory= 1 if torch.cuda.is_available() else None,  #pin_memory=self.trainer.gpus is not None,
             num_workers=self.__num_workers,
             persistent_workers=self.__num_workers > 0,
             collate_fn=partial(
@@ -437,12 +437,12 @@ class CSVDataset(BaseDataset, metaclass=ABCMeta):
         """
         super(CSVDataset, self).__init__()
         self.__dataset_name = dataset_name
-        self.__target_numeric = np.asarray([] if target_numeric is None else target_numeric, dtype=np.long)
-        self.__target_discrete = np.asarray([] if target_discrete is None else target_discrete, dtype=np.long)
+        self.__target_numeric = np.asarray([] if target_numeric is None else target_numeric, dtype=np.int_)
+        self.__target_discrete = np.asarray([] if target_discrete is None else target_discrete, dtype=np.int_)
         self.__feature_numeric = np.asarray([] if feature_numeric is None else np.union1d(
-            np.array(feature_numeric).reshape(-1), np.array(self.__target_numeric).reshape(-1)), dtype=np.long)
+            np.array(feature_numeric).reshape(-1), np.array(self.__target_numeric).reshape(-1)), dtype=np.int_)
         self.__feature_discrete = np.asarray([] if feature_discrete is None else np.union1d(
-            np.array(feature_discrete).reshape(-1), np.array(self.__target_discrete).reshape(-1)), dtype=np.long)
+            np.array(feature_discrete).reshape(-1), np.array(self.__target_discrete).reshape(-1)), dtype=np.int_)
         assert (len(self.__feature_numeric) + len(self.__feature_discrete)) >= 1, r'Invalid features specified!'
         assert (len(self.__target_numeric) + len(self.__target_discrete)) >= 1, r'Invalid targets specified!'
         assert len(np.intersect1d(self.__feature_numeric, self.__feature_discrete)) == 0, r'Invalid features specified!'
@@ -524,7 +524,7 @@ class CSVDataset(BaseDataset, metaclass=ABCMeta):
                 self.__sizes.append(1)
             elif column_index in self.__feature_discrete:
                 column_data_unique = sorted(set(column_data[valid_sample_indices]))
-                col_mapping = {v: np.float(k) for k, v in enumerate(column_data_unique)}
+                col_mapping = {v: float(k) for k, v in enumerate(column_data_unique)}
                 column_data[valid_sample_indices] = np.vectorize(col_mapping.get)(column_data[valid_sample_indices])
                 self.__data[:, column_index] = column_data
                 self.__sizes.append(len(col_mapping))
@@ -532,7 +532,7 @@ class CSVDataset(BaseDataset, metaclass=ABCMeta):
         # Drop unspecified features and ensure floating point data type.
         specified_features = np.union1d(self.__feature_numeric, self.__feature_discrete)
         dropped_features = np.setdiff1d(np.arange(self.__data.shape[1]), specified_features).reshape(-1, 1)
-        self.__data = self.__data[:, specified_features].astype(np.float)
+        self.__data = self.__data[:, specified_features].astype(float)
 
         # Adapt feature/target indices.
         self.__feature_numeric -= (dropped_features < self.__feature_numeric.reshape(1, -1)).sum(axis=0)

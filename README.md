@@ -1,3 +1,12 @@
+
+### Update 03.2025:
+This is updated version to make the library work with the current version of numpy. It is tested with Numpy v1.22.4
+
+run as:   python -m hopular.interactive optim --dataset="sulfur"
+
+or to get list of datasets
+python -m hopular.interactive list --datasets
+
 # Hopular: Modern Hopfield Networks for Tabular Data
 
 _Bernhard Schäfl<sup>1</sup>, Lukas Gruber<sup>1</sup>,
